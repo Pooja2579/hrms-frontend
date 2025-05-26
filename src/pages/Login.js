@@ -18,21 +18,36 @@ const Login = ({ setIsAuthenticated }) => {
   };
 
   return (
-    <div style={{ padding: '40px' }}>
-      <h2>Login to HRMS</h2>
-      <form onSubmit={handleLogin}>
-        <div>
-          <label>Email:</label><br />
-          <input type="email" value={email} onChange={e => setEmail(e.target.value)} required />
-        </div><br />
-        <div>
-          <label>Password:</label><br />
-          <input type="password" value={password} onChange={e => setPassword(e.target.value)} required />
-        </div><br />
-        <button type="submit">Login</button>
+    <div className="min-h-screen flex items-center justify-center bg-gray-100">
+      <form onSubmit={handleLogin} className="bg-white p-8 rounded-lg shadow-md w-full max-w-md">
+        <h2 className="text-2xl font-semibold mb-6 text-center">Login to HRMS</h2>
+        <div className="mb-4">
+          <label className="block text-sm font-medium text-gray-700">Email</label>
+          <input
+            type="email"
+            value={email}
+            onChange={e => setEmail(e.target.value)}
+            className="mt-1 block w-full px-4 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500"
+            required
+          />
+        </div>
+        <div className="mb-6">
+          <label className="block text-sm font-medium text-gray-700">Password</label>
+          <input
+            type="password"
+            value={password}
+            onChange={e => setPassword(e.target.value)}
+            className="mt-1 block w-full px-4 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500"
+            required
+          />
+        </div>
+        <button type="submit" className="w-full bg-indigo-600 text-white py-2 rounded-md hover:bg-indigo-700 transition">
+          Login
+        </button>
       </form>
     </div>
   );
+  
 };
 
 export default Login;
