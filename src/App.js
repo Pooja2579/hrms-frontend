@@ -1,5 +1,5 @@
-import React, { useState } from 'react';
-import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import React, { useState, useEffect } from 'react';
+import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
 import Sidebar from './components/Sidebar';
 import Dashboard from './pages/Dashboard';
 import Employees from './pages/Employees';
@@ -13,15 +13,32 @@ import PrivateRoute from './PrivateRoute';
 import './App.css';
 
 function App() {
-  const [isAuthenticated, setIsAuthenticated] = useState(false);
+  const [isAuthenticated, setIsAuthenticated] = useState(() => {
+    return localStorage.getItem('user') !== null;
+  });
+
+  const handleLogout = () => {
+    localStorage.removeItem('user');
+    setIsAuthenticated(false);
+  };
 
   return (
     <Router>
-      <div className="app-container">
-        {isAuthenticated && <Sidebar />}
-        <div className="main-content">
+      <div className="flex bg-gray-50 min-h-screen">
+        {isAuthenticated && <Sidebar onLogout={handleLogout} />}
+        <div className={`flex-1 ${isAuthenticated ? 'ml-64' : 'w-full'}`}>
           <Routes>
-          <Route path="/" element={<Login setIsAuthenticated={setIsAuthenticated} />} />
+            <Route
+              path="/login"
+              element={
+                isAuthenticated ? (
+                  <Navigate to="/dashboard" />
+                ) : (
+                  <Login setIsAuthenticated={setIsAuthenticated} />
+                )
+              }
+            />
+            <Route path="/" element={<Navigate to="/dashboard" />} />
             <Route
               path="/dashboard"
               element={
